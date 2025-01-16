@@ -1,4 +1,6 @@
 import HeroSourceImage from '@/assets/img/example-hero.jpg';
+import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -14,15 +16,12 @@ export default function Hero() {
                 fugiat veniam occaecat fugiat aliqua.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="#"
-                  className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                >
-                  Sign in
-                </a>
-                <a href="#" className="text-sm font-semibold leading-6 light:text-gray-900">
-                  Join the system <span aria-hidden="true">→</span>
-                </a>
+                <Button variant="default" size="lg" asChild>
+                  <Link to="/login">Sign in</Link>
+                </Button>
+                <Button variant="link" className="text-sm font-semibold leading-6 light:text-gray-900" asChild>
+                  <Link to="/signup">Join the system →</Link>
+                </Button>
               </div>
             </div>
             <div className="mt-16 flow-root sm:mt-24">

@@ -1,5 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "@/features/LandingPage";
+import LoginPage from "@/features/LoginPage/LoginPage";
+import SignupPage from "@/features/SignupPage";
+import PasswordResetPage from "@/features/PasswordResetPage";
+import NotFoundPage from "@/features/NotFoundPage";
+import RequestPasswordResetPage from "@/features/RequestPasswordResetPage";
+import EmailVerificationPage from "@/features/EmailVerificationPage";
 
 export const createRouter = () =>
   createBrowserRouter([
@@ -7,39 +13,41 @@ export const createRouter = () =>
       path: "/",
       element: <LandingPage />
     },
+    {
+        path: "/login",
+        element: <LoginPage />
+    },
+    {
+        path: "/signup",
+        element: <SignupPage />
+    },
+    {
+        path: "/password-reset",
+        element: <PasswordResetPage />
+    },
+    {
+        path: "*",
+        element: <NotFoundPage />
+    },
+    {
+        path: "/request-password-reset",
+        element: <RequestPasswordResetPage />
+    },
+    {
+        path: "/email-verification",
+        element: <EmailVerificationPage />
+    },
     // {
     //   path: "/",
     //   element: <App />,
     //   children: [
     //     {
-    //       element: <RouteProtection />, //Adicionar protecao de rota
+    //       element: <RouteProtection />,
     //       children: [
     //         {
     //           path: "home",
     //           element: <HomeContainer />,
     //           index: true
-    //         },
-    //         {
-    //           path: "campaigns-details/:campaignId",
-    //           element: <InfoLayout />,
-    //           children: [
-    //             {
-    //               path: "dashboards",
-    //               element: <Dashboards />
-    //             },
-    //             {
-    //               path: "offers",
-    //               element: <OffersContainer />
-    //             },
-    //             {
-    //               path: "participants",
-    //               element: <ParticipantsContainer />
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           path: "users",
-    //           element: <UsersContainer />
     //         }
     //       ]
     //     }

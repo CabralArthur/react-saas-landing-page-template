@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Radio, RadioGroup } from '@headlessui/react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 export default function Pricing() {
     const includedFeatures = [
       'Private forum access',
-      'Member resources',
+      'Member resources', 
       'Entry to annual conference',
       'Official member t-shirt',
     ];
@@ -28,69 +31,74 @@ export default function Pricing() {
             in. Explicabo id ut laborum.
           </p>
         </div>
-        <div className="mx-auto bg-white mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+        <Card className="mx-auto mt-16 max-w-2xl rounded-3xl sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
           <div className="p-8 sm:p-10 lg:flex-auto">
-            <h3 className="text-2xl font-bold tracking-tight text-gray-900">Lorem ipsum</h3>
-            <p className="mt-6 text-base leading-7 text-gray-600">
+            <h3 className="text-2xl font-bold tracking-tight">Lorem ipsum</h3>
+            <p className="mt-6 text-base leading-7 text-muted-foreground">
               Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis
               repellendus etur quidem assumenda.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
-              <h4 className="flex-none text-sm font-semibold leading-6 text-blue-600">What’s included</h4>
-              <div className="h-px flex-auto bg-gray-100" />
+              <h4 className="flex-none text-sm font-semibold leading-6 text-primary">What's included</h4>
+              <div className="h-px flex-auto bg-border" />
             </div>
             <ul
               role="list"
-              className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
+              className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-muted-foreground sm:grid-cols-2 sm:gap-6"
             >
               {includedFeatures.map((feature) => (
                 <li key={feature} className="flex gap-x-3 items-center">
-                  <FaCheck aria-hidden="true" className="flex-none text-blue-600" size={10} />
+                  <FaCheck aria-hidden="true" className="flex-none text-primary" size={10} />
                   {feature}
                 </li>
               ))}
             </ul>
           </div>
-          <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-            <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-            <div className="flex flex-col items-center">
-                <fieldset aria-label="Payment frequency">
-                    <RadioGroup
-                    value={paymentFrequency}
-                    onChange={setFrequency}
-                    className="grid grid-cols-2 gap-x-1 rounded-full text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 max-w-[164px] mb-4"
-                    >
-                    {frequencies.map((option) => (
-                        <Radio
-                        key={option.value}
+          <CardContent className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+            <div className="rounded-2xl bg-secondary/50 py-10 text-center lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div className="flex flex-col items-center">
+                <RadioGroup
+                  value={paymentFrequency}
+                  onValueChange={setFrequency}
+                  className="flex items-center justify-center rounded-full text-center text-xs ring-1 ring-border mb-4 bg-background p-0.5"
+                >
+                  {frequencies.map((option) => (
+                    <div key={option.value} className="flex items-center justify-center">
+                      <RadioGroupItem
                         value={option.value}
-                        className="cursor-pointer rounded-full px-2.5 py-1 text-gray-500 data-[checked]:bg-blue-600 data-[checked]:text-white"
-                        >
-                            {option.label}
-                        </Radio>
-                    ))}
-                    </RadioGroup>
-                </fieldset>
+                        id={option.value}
+                        className="sr-only"
+                      />
+                      <Label
+                        htmlFor={option.value}
+                        className={`cursor-pointer rounded-full px-3 py-1 ${
+                          paymentFrequency === option.value ? "bg-primary text-primary-foreground" : ""
+                        }`}
+                      >
+                        {option.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
                 <div className="mx-auto max-w-xs px-8">
-                    <p className="text-base font-semibold text-gray-600">Enjoy the 14 day trial!</p>
-                    <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                    <span className="text-5xl font-bold tracking-tight text-gray-900">${paymentFrequency === 'monthly' && '5' || '50' }</span>
-                    <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
-                    </p>
-                    <Link
-                        to={'/login'}
-                        className="mt-10 block w-full rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                        >
-                        Get started
+                  <p className="text-base font-semibold text-muted-foreground">Enjoy the 14 day trial!</p>
+                  <p className="mt-6 flex items-baseline justify-center gap-x-2">
+                    <span className="text-5xl font-bold tracking-tight">${paymentFrequency === 'monthly' ? '5' : '50'}</span>
+                    <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">USD</span>
+                  </p>
+                  <Button asChild className="mt-10 w-full">
+                    <Link to="/login">
+                      Get started
                     </Link>
-                    <p className="mt-6 text-xs leading-5 text-gray-600">
-                        Invoices and receipts available for easy company reimbursement
-                    </p>
+                  </Button>
+                  <p className="mt-6 text-xs leading-5 text-muted-foreground">
+                    Invoices and receipts available for easy company reimbursement
+                  </p>
                 </div>
+              </div>
             </div>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
