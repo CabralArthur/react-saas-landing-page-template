@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "@/app/api";
-import { User } from "@/processes/user";
+import { useState } from "react";
+import { setToken } from "@/utils/storage";
 
 interface AuthResponse {
   token: string;
-  user: User;
 }
 
 const loginSchema = z.object({
@@ -21,6 +20,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPageContainer() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<
     LoginFormData
@@ -28,37 +28,28 @@ export default function LoginPageContainer() {
     resolver: zodResolver(loginSchema)
   });
 
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: async (credentials: LoginFormData) => {
-      const { data } = await api.post<AuthResponse>("/auth/login", credentials);
-      return data;
-    },
-    onSuccess: data => {
-      localStorage.setItem(
-        "auth-storage",
-        JSON.stringify({
-          state: {
-            token: data.token,
-            user: data.user,
-            isAuthenticated: true
-          }
-        })
-      );
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setIsLoading(true);
+      
+      const response = await api.post<AuthResponse>("/auth/login", data);
+
+      setToken(response.data?.token);
+      
       toast.success("Login successful!");
       navigate("/tasks");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Login failed");
+    } catch (error) {
+      toast.error((error as Error).message || "Login failed");
+    } finally {
+      setIsLoading(false);
     }
-  });
-
-  const onSubmit = (data: LoginFormData) => login(data);
+  };
 
   return {
     register,
     errors,
-    isPending,
     onSubmit,
-    handleSubmit
+    handleSubmit,
+    isLoading
   }
 }

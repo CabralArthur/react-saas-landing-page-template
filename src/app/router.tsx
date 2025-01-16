@@ -1,35 +1,47 @@
 import { createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
+
 import LandingPage from "@/features/LandingPage";
 import LoginPage from "@/features/LoginPage";
-import SignupContainer from "@/features/SignupPage";
-import TasksContainer from "@/features/Tasks/";
+import SignupPage from "@/features/SignupPage";
+import TasksPage from "@/features/TasksPage";
 import NotFoundPage from "@/features/NotFoundPage/NotFoundPage";
-import RequestPasswordResetContainer from "@/features/RequestPasswordResetPage";
+import RequestPasswordResetPage from "@/features/RequestPasswordResetPage";
+import ResetPasswordPage from "@/features/ResetPasswordPage";
+import PublicRoutes from "@/features/PublicRoutes";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignupContainer />,
-  },
-  {
-    path: "/request-password-reset",
-    element: <RequestPasswordResetContainer />,
+    element: <PublicRoutes />,
+    children: [
+        {
+            path: "/",
+            element: <LandingPage />,
+          },
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/signup",
+            element: <SignupPage />,
+          },
+          {
+            path: "/request-password-reset",
+            element: <RequestPasswordResetPage />,
+          },
+          {
+            path: "/reset-password/:token",
+            element: <ResetPasswordPage />,
+          },
+    ]
   },
   {
     element: <App />,
     children: [
       {
         path: "/tasks",
-        element: <TasksContainer />,
+        element: <TasksPage />,
       },
     ],
   },

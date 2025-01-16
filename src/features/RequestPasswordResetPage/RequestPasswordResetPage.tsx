@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 export default function RequestPasswordReset() {
-    const { register, handleSubmit, onSubmit, isPending } = useRequestPasswordResetPageContainer();
+    const { register, handleSubmit, onSubmit, isLoading } = useRequestPasswordResetPageContainer();
 
   return (
     <div className="flex min-h-screen flex-1">
@@ -38,15 +38,15 @@ export default function RequestPasswordReset() {
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" required {...register("email")} />
                 </div>
-                <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending ? "Sending..." : "Send Reset Link"}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? "Sending..." : "Send Reset Link"}
                 </Button>
                 <div className="text-center">
                     <Button variant="link" asChild>
-                    <Link to="/login">
-                        <ArrowLeftIcon className="w-4 h-4 mr-2" />
-                        Back to Sign in
-                    </Link>
+                        <Link to="/login">
+                            <ArrowLeftIcon className="w-4 h-4 mr-2" />
+                            Back to Sign in
+                        </Link>
                     </Button>
                 </div>
                 </form>

@@ -5,19 +5,9 @@ import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useUserStore } from '../../stores/user.store'
+import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
-    const userInfo = useUserStore((state) => state.userInfo);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (userInfo) {
-            navigate('/tasks');
-        }
-    }, [userInfo, navigate]);
-
     return (
         <div className='bg-white dark:text-white dark:bg-slate-900 sm:px-6 lg:px-8'>
             <NavBar/>

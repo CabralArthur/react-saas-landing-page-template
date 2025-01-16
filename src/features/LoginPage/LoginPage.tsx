@@ -11,14 +11,19 @@ import {
 } from "@/components/ui/card";
 import loginPaisageSource from "@/assets/img/login-paisage.jpg";
 import useLoginPageContainer from "./LoginPage.container";
+import { EyeIcon } from "lucide-react";
+import { EyeOffIcon } from "lucide-react";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
     onSubmit,
     errors,
-    isPending
+    isLoading
   } = useLoginPageContainer() || {};
 
   return (
@@ -55,20 +60,35 @@ export default function LoginPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    {...register("password")}
-                    aria-invalid={errors.password ? "true" : "false"}
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      {...register("password")}
+                      aria-invalid={errors.password ? "true" : "false"}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-1 top-0.5 h-8 w-8 px-0"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOffIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeIcon className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
                   {errors.password &&
                     <p className="text-sm text-red-500">
                       Password is required
                     </p>}
                 </div>
-                <Button type="submit" className="w-full" disabled={isPending}>
-                  {isPending ? "Signing in..." : "Sign in"}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
               </form>
 
