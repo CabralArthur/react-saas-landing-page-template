@@ -6,57 +6,51 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "@/app/api";
 import { User } from "@/processes/user";
-import LoginPage from "./LoginPage";
+import SignupPage from "./SignupPage";
 
 interface AuthResponse {
   token: string;
   user: User;
 }
 
-const loginSchema = z.object({
+const signupSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters")
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type SignupFormData = z.infer<typeof signupSchema>;
 
-export default function LoginPageContainer() {
+export default function SignupContainer() {
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm<
-    LoginFormData
+    SignupFormData
   >({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(signupSchema)
   });
 
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: async (credentials: LoginFormData) => {
-      const { data } = await api.post<AuthResponse>("/auth/login", credentials);
+  const { mutate: signup, isPending } = useMutation({
+    mutationFn: async (credentials: SignupFormData) => {
+      const { data } = await api.post<AuthResponse>(
+        "/auth/register",
+        credentials
+      );
       return data;
     },
-    onSuccess: data => {
-      localStorage.setItem(
-        "auth-storage",
-        JSON.stringify({
-          state: {
-            token: data.token,
-            user: data.user,
-            isAuthenticated: true
-          }
-        })
-      );
-      toast.success("Login successful!");
-      navigate("/tasks");
+    onSuccess: () => {
+      toast.success("Account created successfully! Please verify your email.");
+      navigate("/login");
     },
     onError: (error: Error) => {
-      toast.error(error.message || "Login failed");
+      toast.error(error.message || "Failed to create account");
     }
   });
 
-  const onSubmit = (data: LoginFormData) => login(data);
+  const onSubmit = (data: SignupFormData) => signup(data);
 
   return (
-    <LoginPage
+    <SignupPage
       register={register}
       handleSubmit={handleSubmit(onSubmit)}
       errors={errors}

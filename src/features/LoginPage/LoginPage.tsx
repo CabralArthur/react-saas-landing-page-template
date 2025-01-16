@@ -4,8 +4,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import loginPaisageSource from '@/assets/img/login-paisage.jpg';
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 
-export default function Login() {
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+export default function LoginPage({
+    register,
+    handleSubmit,
+    errors,
+    isLoading
+}: {
+    register: UseFormRegister<LoginFormData>
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+    errors: FieldErrors<LoginFormData>
+    isLoading: boolean
+}) {
   return (
     <div className="flex min-h-screen flex-1">
         <div className="relative hidden w-0 flex-1 lg:block">
@@ -23,17 +39,30 @@ export default function Login() {
                         <CardDescription>Enter your email and password to login</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="m@example.com" required />
+                                <Input 
+                                    id="email" 
+                                    type="email" 
+                                    placeholder="m@example.com" 
+                                    {...register("email")}
+                                    aria-invalid={errors.email ? "true" : "false"}
+                                />
+                                {errors.email && <p className="text-sm text-red-500">Email is required</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="password">Password</Label>
-                                <Input id="password" type="password" required />
+                                <Input 
+                                    id="password" 
+                                    type="password" 
+                                    {...register("password")}
+                                    aria-invalid={errors.password ? "true" : "false"}
+                                />
+                                {errors.password && <p className="text-sm text-red-500">Password is required</p>}
                             </div>
-                            <Button type="submit" className="w-full">
-                                Sign in
+                            <Button type="submit" className="w-full" disabled={isLoading}>
+                                {isLoading ? "Signing in..." : "Sign in"}
                             </Button>
                         </form>
                         

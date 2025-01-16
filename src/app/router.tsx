@@ -1,56 +1,35 @@
 import { createBrowserRouter } from "react-router-dom";
+import { App } from "../App";
 import LandingPage from "@/features/LandingPage";
-import LoginPage from "@/features/LoginPage/LoginPage";
-import SignupPage from "@/features/SignupPage";
-import PasswordResetPage from "@/features/PasswordResetPage";
-import NotFoundPage from "@/features/NotFoundPage";
-import RequestPasswordResetPage from "@/features/RequestPasswordResetPage";
-import EmailVerificationPage from "@/features/EmailVerificationPage";
+import LoginPageContainer from "@/features/LoginPage";
+import SignupContainer from "@/features/SignupPage";
+import TasksContainer from "@/features/Tasks/";
+import NotFoundPage from "@/features/NotFoundPage/NotFoundPage";
 
-export const createRouter = () =>
-  createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />
-    },
-    {
-        path: "/login",
-        element: <LoginPage />
-    },
-    {
-        path: "/signup",
-        element: <SignupPage />
-    },
-    {
-        path: "/password-reset",
-        element: <PasswordResetPage />
-    },
-    {
-        path: "*",
-        element: <NotFoundPage />
-    },
-    {
-        path: "/request-password-reset",
-        element: <RequestPasswordResetPage />
-    },
-    {
-        path: "/email-verification",
-        element: <EmailVerificationPage />
-    },
-    // {
-    //   path: "/",
-    //   element: <App />,
-    //   children: [
-    //     {
-    //       element: <RouteProtection />,
-    //       children: [
-    //         {
-    //           path: "home",
-    //           element: <HomeContainer />,
-    //           index: true
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
-  ]);
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPageContainer />,
+  },
+  {
+    path: "/signup",
+    element: <SignupContainer />,
+  },
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/tasks",
+        element: <TasksContainer />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
+]);
