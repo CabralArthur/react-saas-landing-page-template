@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "@/app/api";
 import { User } from "@/processes/user";
-import LoginPage from "./LoginPage";
 
 interface AuthResponse {
   token: string;
@@ -55,12 +54,11 @@ export default function LoginPageContainer() {
 
   const onSubmit = (data: LoginFormData) => login(data);
 
-  return (
-    <LoginPage
-      register={register}
-      handleSubmit={handleSubmit(onSubmit)}
-      errors={errors}
-      isLoading={isPending}
-    />
-  );
+  return {
+    register,
+    errors,
+    isPending,
+    onSubmit,
+    handleSubmit
+  }
 }

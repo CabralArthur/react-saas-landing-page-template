@@ -2,16 +2,16 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, signup, resetPassword, verifyEmail } from '@/processes/auth'
-import { useAuthStore } from '@/stores/auth.store'
+import { useUserStore } from '@/stores/user.store'
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { setAuth, clearAuth } = useAuthStore();
+  const { clearUserInfo } = useUserStore();
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      setAuth(data.token)
+      localStorage.setItem('auth-token', JSON.stringify(data));
       toast.success('Login successful!')
       navigate('/tasks')
     },
@@ -22,8 +22,7 @@ export const useAuth = () => {
 
   const signupMutation = useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
-      setAuth(data.token)
+    onSuccess: () => {
       toast.success('Signup successful!')
       navigate('/login')
     },
@@ -55,7 +54,7 @@ export const useAuth = () => {
   })
 
   const logout = () => {
-    clearAuth();
+    clearUserInfo();
     toast.success('Logged out successfully');
     navigate('/login');
   }

@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
 import LandingPage from "@/features/LandingPage";
-import LoginPageContainer from "@/features/LoginPage";
+import LoginPage from "@/features/LoginPage";
 import SignupContainer from "@/features/SignupPage";
 import TasksContainer from "@/features/Tasks/";
 import NotFoundPage from "@/features/NotFoundPage/NotFoundPage";
+import RequestPasswordResetContainer from "@/features/RequestPasswordResetPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,11 +14,15 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginPageContainer />,
+    element: <LoginPage />,
   },
   {
     path: "/signup",
     element: <SignupContainer />,
+  },
+  {
+    path: "/request-password-reset",
+    element: <RequestPasswordResetContainer />,
   },
   {
     element: <App />,
