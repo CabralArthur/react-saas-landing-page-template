@@ -24,7 +24,7 @@ export const useUserStore = create<UserState>()(
         set({ userInfo: null }),
     }),
     {
-      name: 'user-storage',
+      name: 'user-storage'
     }
   )
 )

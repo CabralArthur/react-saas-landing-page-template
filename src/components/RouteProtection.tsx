@@ -1,14 +1,25 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getUserInfo } from '@/processes/user'
+import { useUserStore } from '@/stores/user.store'
+import { useEffect } from 'react'
 
-export const PublicRoutes = () => {
-    const { data: userInfo, isLoading } = useQuery({
+export const RouteProtection = () => {
+    const { userInfo, setUserInfo } = useUserStore()
+    
+    const { data, isLoading } = useQuery({
         queryKey: ['userInfo'],
         queryFn: getUserInfo,
         retry: false,
-        staleTime: Infinity
+        staleTime: Infinity,
+        refetchOnWindowFocus: false
     })
+
+    useEffect(() => {
+        if (data) {
+            setUserInfo(data)
+        }
+    }, [data, setUserInfo])
 
     if (isLoading) {
         return (
@@ -18,10 +29,9 @@ export const PublicRoutes = () => {
         )
     }
 
-    // If user is logged in, redirect to tasks
-    if (userInfo) {
-        return <Navigate to="/tasks" replace />
+    if (!data || !userInfo) {
+        return <Navigate to="/login" replace />
     }
 
     return <Outlet />
-}
+} 

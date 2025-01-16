@@ -34,11 +34,12 @@ export default function LoginPageContainer() {
       
       const response = await api.post<AuthResponse>("/auth/login", data);
 
-      setToken(response.data?.token);
+      setToken(JSON.stringify(response.data?.token));
       
       toast.success("Login successful!");
       navigate("/tasks");
     } catch (error) {
+      console.log(error);
       toast.error((error as Error).message || "Login failed");
     } finally {
       setIsLoading(false);

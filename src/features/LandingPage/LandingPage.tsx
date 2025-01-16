@@ -4,9 +4,6 @@ import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-
 export default function LandingPage() {
     return (
         <div className='bg-white dark:text-white dark:bg-slate-900 sm:px-6 lg:px-8'>

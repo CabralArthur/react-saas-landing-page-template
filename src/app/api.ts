@@ -9,16 +9,11 @@ const api = axios.create({
     },
   })
   
-// Add request interceptor to include token in requests
 api.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
 
     if (token) {
-        const parsedToken = JSON.parse(token);
-
-        if (parsedToken) {
-            config.headers.Authorization = `Bearer ${parsedToken}`
-        }
+        config.headers.Authorization = `Bearer ${token}`
     };
 
     return config
