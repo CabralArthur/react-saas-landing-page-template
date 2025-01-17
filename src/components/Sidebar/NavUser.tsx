@@ -33,11 +33,12 @@ import { useNavigate } from "react-router-dom"
 
 export default function NavUser() {
   const { isMobile } = useSidebar()
-  const { userInfo } = useUserStore();
+  const { userInfo, clearUserInfo } = useUserStore();
   const navigate = useNavigate();
 
   const onLogoutClick = () => {
     logout();
+    clearUserInfo();
     navigate('/login');
   }
 

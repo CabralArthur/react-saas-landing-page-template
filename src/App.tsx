@@ -15,9 +15,9 @@ export const App = () => {
         <SidebarTrigger className="md:hidden ml-2 fixed top-2 left-2">
             <PanelLeft />
         </SidebarTrigger>
-        <div className="flex flex-1 flex-col gap-4 pt-0">
-          <div className="min-h-screen bg-purple-50">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-1 flex-col gap-4 pt-0 p-10">
+          <div className="min-h-screen">
+            <div className="mx-auto">
               <Outlet />
             </div>
           </div>

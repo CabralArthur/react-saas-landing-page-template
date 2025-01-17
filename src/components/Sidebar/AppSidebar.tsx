@@ -11,19 +11,13 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
-  SidebarTrigger
+  SidebarRail
 } from "@/components/ui/sidebar"
 
 import TeamHeader from "./TeamHeader"
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   mainNav: [
     {
       title: "Application",
@@ -33,7 +27,7 @@ const data = {
       items: [
         {
           title: "Tasks",
-          url: "#",
+          url: "/tasks",
         }
       ],
     },

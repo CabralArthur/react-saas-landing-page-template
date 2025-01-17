@@ -1,18 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { getUserInfo } from '@/processes/user'
-import { useUserStore } from '@/stores/user.store'
-import { useEffect } from 'react'
+import { Navigate, Outlet } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/processes/user';
+import { useUserStore } from '@/stores/user.store';
+import { useEffect } from 'react';
+import useIsLogged from '@/hooks/use-is-logged';
 
 export const RouteProtection = () => {
-    const { userInfo, setUserInfo } = useUserStore()
+    const isLogged = useIsLogged();
+    const { setUserInfo } = useUserStore();
     
     const { data, isLoading } = useQuery({
         queryKey: ['userInfo'],
         queryFn: getUserInfo,
-        retry: false,
-        staleTime: Infinity,
-        refetchOnWindowFocus: false
+        retry: false
     })
 
     useEffect(() => {
@@ -29,9 +29,5 @@ export const RouteProtection = () => {
         )
     }
 
-    if (!data || !userInfo) {
-        return <Navigate to="/login" replace />
-    }
-
-    return <Outlet />;
+    return isLogged ? <Outlet /> : <Navigate to="/login" />
 } 
