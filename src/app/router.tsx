@@ -44,6 +44,7 @@ export const router = createBrowserRouter([
     },
     {
         element: <App />,
+        path: "/",
         children: [
             {
                 element: <RouteProtection />,

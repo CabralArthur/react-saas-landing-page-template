@@ -39,7 +39,6 @@ export default function LoginPageContainer() {
       toast.success("Login successful!");
       navigate("/tasks");
     } catch (error) {
-      console.log(error);
       toast.error((error as Error).message || "Login failed");
     } finally {
       setIsLoading(false);
