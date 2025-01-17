@@ -10,6 +10,7 @@ import TasksPage from "@/features/TasksPage";
 import NotFoundPage from "@/features/NotFoundPage/NotFoundPage";
 import RequestPasswordResetPage from "@/features/RequestPasswordResetPage";
 import ResetPasswordPage from "@/features/ResetPasswordPage";
+import VerifyEmailPage from "@/features/VerifyEmailPage";
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
             {
                 path: "/reset-password/:token",
                 element: <ResetPasswordPage />,
+            },
+            {
+                path: "/verify-email/:token",
+                element: <VerifyEmailPage />,
             }
         ]
     },
