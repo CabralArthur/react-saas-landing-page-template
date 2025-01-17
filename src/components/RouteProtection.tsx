@@ -33,5 +33,5 @@ export const RouteProtection = () => {
         return <Navigate to="/login" replace />
     }
 
-    return <Outlet />
+    return <Outlet />;
 } 

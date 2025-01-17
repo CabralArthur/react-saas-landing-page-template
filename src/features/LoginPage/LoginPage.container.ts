@@ -34,7 +34,7 @@ export default function LoginPageContainer() {
       
       const response = await api.post<AuthResponse>("/auth/login", data);
 
-      setToken(JSON.stringify(response.data?.token));
+      setToken(response.data?.token);
       
       toast.success("Login successful!");
       navigate("/tasks");
