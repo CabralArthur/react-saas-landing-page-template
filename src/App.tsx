@@ -1,31 +1,52 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { getUserInfo } from '@/processes/user'
+import { Outlet } from 'react-router-dom'
+import { AppSidebar } from "@/components/Sidebar/AppSidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
 export const App = () => {
-  const { data: userInfo, isLoading } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    retry: false,
-  })
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-primary">Loading...</div>
-      </div>
-    )
-  }
-
-  if (!userInfo) {
-    return <Navigate to="/login" replace />
-  }
-
   return (
-    <div className="min-h-screen bg-purple-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Outlet />
-      </div>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="min-h-screen bg-purple-50">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <Outlet />
+            </div>
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

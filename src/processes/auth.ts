@@ -20,6 +20,10 @@ interface AuthResponse {
   user: User
 }
 
+interface VerifyEmailResponse {
+  success: boolean
+}
+
 export const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
     const { data } = await api.post<AuthResponse>('/auth/login', credentials)
     return data
@@ -34,6 +38,7 @@ export const resetPassword = async (email: string): Promise<void> => {
     await api.post('/auth/reset-password', { email })
 };
 
-export const verifyEmail = async (token: string): Promise<void> => {
-    await api.post('/auth/verify-email', { token })
+export const verifyEmail = async (token: string): Promise<VerifyEmailResponse> => {
+    const { data } = await api.get<VerifyEmailResponse>('/auth/verify-email', { params: { token } })
+    return data
 };

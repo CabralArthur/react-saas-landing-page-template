@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "@/app/api";
 import { User } from "@/processes/user";
-import SignupPage from "./SignupPage";
 
 interface AuthResponse {
   token: string;
@@ -16,7 +15,8 @@ interface AuthResponse {
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters")
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string().min(8, "Password must be at least 8 characters")
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -49,12 +49,11 @@ export default function SignupContainer() {
 
   const onSubmit = (data: SignupFormData) => signup(data);
 
-  return (
-    <SignupPage
-      register={register}
-      handleSubmit={handleSubmit(onSubmit)}
-      errors={errors}
-      isLoading={isPending}
-    />
-  );
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isPending,
+    onSubmit
+  }
 }
