@@ -3,7 +3,6 @@
 import {
   BadgeCheck,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
 } from "lucide-react"
 
@@ -35,6 +34,10 @@ export default function NavUser() {
   const { isMobile } = useSidebar()
   const { userInfo, clearUserInfo } = useUserStore();
   const navigate = useNavigate();
+
+  const onProfileClick = () => {
+    navigate('/profile');
+  };
 
   const onLogoutClick = () => {
     logout();
@@ -84,14 +87,10 @@ export default function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
+                <DropdownMenuItem onClick={onProfileClick}>
+                    <BadgeCheck />
+                    Profile
+                </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onLogoutClick}>

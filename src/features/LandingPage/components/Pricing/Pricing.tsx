@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import usePricingContainer from "./Pricing.container";
+import { Loader2 } from "lucide-react";
 
 export default function Pricing() {
     const includedFeatures = [
@@ -15,11 +16,12 @@ export default function Pricing() {
     ];
     
     const frequencies = [
-        { value: 'monthly', label: 'Monthly', priceSuffix: '/month' },
-        { value: 'annually', label: 'Annually', priceSuffix: '/year' },
+        { value: 'MONTHLY', label: 'Monthly', priceSuffix: '/month' },
+        { value: 'YEARLY', label: 'Annually', priceSuffix: '/year' },
     ];
 
-    const [paymentFrequency, setFrequency] = useState('monthly');
+    const { handleSubscribeClick, isLoading } = usePricingContainer();
+    const [paymentFrequency, setFrequency] = useState('MONTHLY');
 
   return (
     <div className="py-24 sm:py-32" id="pricing">
@@ -83,13 +85,22 @@ export default function Pricing() {
                 <div className="mx-auto max-w-xs px-8">
                   <p className="text-base font-semibold text-muted-foreground">Enjoy the 14 day trial!</p>
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                    <span className="text-5xl font-bold tracking-tight">${paymentFrequency === 'monthly' ? '5' : '50'}</span>
-                    <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">USD</span>
+                    <span className="text-5xl font-bold tracking-tight">€ {paymentFrequency === 'MONTHLY' ? '20' : '200'}</span>
+                    <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">EUR</span>
                   </p>
-                  <Button asChild className="mt-10 w-full">
-                    <Link to="/login">
-                      Get started
-                    </Link>
+                  <Button 
+                    className="mt-10 w-full" 
+                    onClick={() => handleSubscribeClick(paymentFrequency)} 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      'Get started'
+                    )}
                   </Button>
                   <p className="mt-6 text-xs leading-5 text-muted-foreground">
                     Invoices and receipts available for easy company reimbursement

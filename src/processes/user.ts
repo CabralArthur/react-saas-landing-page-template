@@ -5,7 +5,11 @@ export interface User {
   id: string
   email: string
   name: string
+  isAdmin: boolean
   permissions: object[]
+  team: {
+    plan_status: string
+  }
 }
 
 export const getUserInfo = async (): Promise<User | null> => {

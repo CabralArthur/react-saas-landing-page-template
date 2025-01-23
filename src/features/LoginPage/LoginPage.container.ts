@@ -37,7 +37,7 @@ export default function LoginPageContainer() {
       setToken(response.data?.token);
       
       toast.success("Login successful!");
-      navigate("/tasks");
+      navigate("/home");
     } catch (error) {
       toast.error((error as Error).message || "Login failed");
     } finally {

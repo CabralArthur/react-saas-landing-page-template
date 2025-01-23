@@ -1,11 +1,19 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface UserInfo {
+export interface UserInfo {
   id: string
   email: string
   name: string
-  permissions: object[]
+  isAdmin: boolean
+  team: {
+    name: string
+    plan_status: string
+  }
+  permissions: Array<{
+    name: string
+    module: string
+  }>
 }
 
 interface UserState {
@@ -18,10 +26,14 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       userInfo: null,
-      setUserInfo: userInfo =>
-        set({ userInfo }),
+      setUserInfo: (userInfo) => 
+        set({ 
+          userInfo, 
+        }),
       clearUserInfo: () =>
-        set({ userInfo: null }),
+        set({ 
+          userInfo: null, 
+        }),
     }),
     {
       name: 'user-storage'

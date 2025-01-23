@@ -6,23 +6,26 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar"
 import { PanelLeft } from "lucide-react";
+import { AbilityProvider } from './providers/AbilityProvider';
 
 export const App = () => {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <SidebarTrigger className="md:hidden ml-2 fixed top-2 left-2">
-            <PanelLeft />
-        </SidebarTrigger>
-        <div className="flex flex-1 flex-col gap-4 pt-0 p-10">
-          <div className="min-h-screen">
-            <div className="mx-auto">
-              <Outlet />
+    <AbilityProvider>
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+            <SidebarTrigger className="md:hidden ml-2 fixed top-2 left-2">
+                <PanelLeft />
+            </SidebarTrigger>
+            <div className="flex flex-1 flex-col gap-4 pt-0 p-10">
+                <div className="min-h-screen">
+                <div className="mx-auto">
+                    <Outlet />
+                </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+            </SidebarInset>
+        </SidebarProvider>
+    </AbilityProvider>
   )
 }
